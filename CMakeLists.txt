@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(foobar)
+project(dronesnap)
 
 SET(OpenCV_DIR "/usr/share/OpenCV")
 SET(OpenCV_INSTALL_PATH "/usr")
@@ -134,22 +134,22 @@ include_directories(
 
 )
 
-add_executable(CopyMovelistener  src/CopyMove.cpp)
-target_link_libraries(CopyMovelistener ${catkin_LIBRARIES})
-add_dependencies(CopyMovelistener foobar_gencpp)
+#add_executable(CopyMovelistener  src/CopyMove.cpp)
+#target_link_libraries(CopyMovelistener ${catkin_LIBRARIES})
+#add_dependencies(CopyMovelistener foobar_gencpp)
 
-add_executable(accelator src/accelator.cpp)
-target_link_libraries(accelator ${catkin_LIBRARIES})
-add_dependencies(accelator foobar_gencpp)
+#add_executable(accelator src/accelator.cpp)
+#target_link_libraries(accelator ${catkin_LIBRARIES})
+#add_dependencies(accelator foobar_gencpp)
 
 
-add_executable(imageSubscriber src/ImageSubscriber.cpp)
-target_link_libraries(imageSubscriber ${catkin_LIBRARIES})
-add_dependencies(imageSubscriber foobar_gencpp)
+#add_executable(imageSubscriber src/ImageSubscriber.cpp)
+#target_link_libraries(imageSubscriber ${catkin_LIBRARIES})
+#add_dependencies(imageSubscriber foobar_gencpp)
 
  add_executable(imageTracker src/imageTracker.cpp)
  target_link_libraries(imageTracker ${catkin_LIBRARIES})
- add_dependencies(imageTracker foobar_gencpp)
+ add_dependencies(imageTracker dronesnap_gencpp)
 
 
 
@@ -172,7 +172,7 @@ add_dependencies(imageSubscriber foobar_gencpp)
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(
-	imageSubscriber ${OpenCV_LIBS}
+	imageTracker ${OpenCV_LIBS}
  )
 
 #############
