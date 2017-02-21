@@ -24,7 +24,7 @@ static const std::string OPENCV_WINDOW = "Image window";
 
 int loop_count=0;
 
-    Rect prev_rect;
+Rect prev_rect;
 
 
 
@@ -184,12 +184,17 @@ public:
             prev_rect = object_region;
         }
         else{                      
+ 			if(prev_rect.size().height==0)
+			{
+				loop_count=0;	
+			}
+			else{
+            	backProjection(img_hsv, objectHistogram, bp);
+            	bitwise_and(bp, img_binary, bp);  		//bp =  bp&& img_binary
+            	RotatedRect rect = CamShift(bp, prev_rect, cvTermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 20, 1));
  
-            backProjection(img_hsv, objectHistogram, bp);
-            bitwise_and(bp, img_binary, bp);  		//bp =  bp&& img_binary
-            RotatedRect rect = CamShift(bp, prev_rect, cvTermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 20, 1));
- 
-            ellipse(img_input, rect, CV_RGB(0,255,0), 1, CV_AA); 
+            	ellipse(img_input, rect, CV_RGB(0,255,0), 1, CV_AA); 
+			}
         }
         
         imshow("이진화 영상", img_binary); 
