@@ -111,10 +111,13 @@ public:
  namedWindow("찾을 색범위 설정", CV_WINDOW_AUTOSIZE); 
  
     //트랙바에서 사용되는 변수 초기화 
-     int LowH = 170;
+     int LowH = 164;
      int HighH = 179;
- 
-      int LowS = 50; 
+		
+	int LowH2 = 0;
+	int HighH2 = 15;
+	 					// to find red, we need two ranges.
+      int LowS = 150; 
      int HighS = 255;
  
       int LowV = 0;
@@ -144,7 +147,7 @@ public:
         
   		 loop_count++; 
 
-        Mat img_input, img_hsv, img_binary,img_tmp;
+        Mat img_input, img_hsv, img_binary,img_binary2,img_tmp;
 		
         img_input = cv_ptr->image;
  //		img_input.copyTo(img_tmp);
@@ -156,9 +159,12 @@ public:
          
             //지정한 HSV 범위를 이용하여 영상을 이진화
         inRange(img_hsv, Scalar(LowH, LowS, LowV), Scalar(HighH, HighS, HighV), img_binary); 
+
             
- 
-        //morphological opening 작은 점들을 제거 
+ 		inRange(img_hsv, Scalar(LowH2,LowS, LowV),Scalar(HighH2,HighS,HighV),img_binary2);
+        
+		bitwise_or(img_binary,img_binary2,img_binary);				// combine two ranges.
+		//morphological opening 작은 점들을 제거 
         erode(img_binary, img_binary, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
         dilate( img_binary, img_binary, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) ); 
  
@@ -167,13 +173,14 @@ public:
         dilate( img_binary, img_binary, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) ); 
         erode(img_binary, img_binary, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
                   
+        imshow("HSV ",img_hsv);
         
         if ( loop_count < 100 )
         {
-			int left = 280;
-			int top = 180;
-			int width=130;
-			int height=130;
+			int left = 10;
+			int top = 10;
+			int width=400;
+			int height=450;
  
             rectangle( img_input, Point(left,top), Point(left+width,top+height),  
                         Scalar(0,0,255),1 );  
@@ -198,7 +205,7 @@ public:
         }
         
         imshow("이진화 영상", img_binary); 
-        imshow("원본 영상", img_input); 
+		imshow("원본 영상", img_input); 
 		image_pub_.publish(cv_ptr->toImageMsg()); 
         //ESC키 누르면 프로그램 종료
         if (waitKey(1) == 27) 
