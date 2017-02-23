@@ -138,9 +138,9 @@ include_directories(
 #target_link_libraries(CopyMovelistener ${catkin_LIBRARIES})
 #add_dependencies(CopyMovelistener foobar_gencpp)
 
-#add_executable(accelator src/accelator.cpp)
-#target_link_libraries(accelator ${catkin_LIBRARIES})
-#add_dependencies(accelator foobar_gencpp)
+add_executable(mover src/canMover.cpp)
+target_link_libraries(mover ${catkin_LIBRARIES})
+add_dependencies(mover dronesnap_gencpp)
 
 
 #add_executable(imageSubscriber src/ImageSubscriber.cpp)
