@@ -151,7 +151,9 @@ add_dependencies(mover dronesnap_gencpp)
  target_link_libraries(imageTracker ${catkin_LIBRARIES})
  add_dependencies(imageTracker dronesnap_gencpp)
 
-
+ add_executable(controller src/droneController.cpp)
+ target_link_libraries(controller ${catkin_LIBRARIES})
+ add_dependencies(controller dronesnap_gencpp)
 
 ## Declare a C++ library
 # add_library(beginner_tutorials
