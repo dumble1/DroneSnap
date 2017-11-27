@@ -21,11 +21,16 @@
       <param name="mocap/use_tf" value="true"/>
       <param name="mocap/use_pose" value="false"/>
   </node>
-  
+<!--  
   <node name="accelator" pkg="foobar" type="accelator" output="screen">
      
   
-  </node>
+  </node> -->
+
+  <node name="pub_setpoints_traj" pkg="modudculab_ros" type="pub_setpoints_traj" output="screen" >
+	<param name="wn" value="2" />
+	<param name="r" value="3.0" />	
+</node>
 
 
 </launch>
